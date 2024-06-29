@@ -33,10 +33,14 @@ def scrape_instagram_content(username, scheduling_seconds):
     return content
 
 # Function to send messages to Matrix
-async def send_matrix_messages(access_token, user_id, room_id, content):
-    client = Client("https://matrix.org")
-    client.access_token = access_token
-    client.user_id = user_id
+async def send_matrix_messages(host, user_id, password, room_id, content):
+    client = Client(host)
+
+    try:
+        await client.login(user_id, password)
+    except Exception as e:
+        print(f"Failed to log in: {e}")
+        return
 
     for item in content:
         message_content = TextMessageEventContent(
@@ -48,13 +52,14 @@ async def send_matrix_messages(access_token, user_id, room_id, content):
 # Main function
 async def main():
     instagram_username = os.getenv('INSTAGRAM_USERNAME')
-    matrix_access_token = os.getenv('MATRIX_ACCESS_TOKEN')
+    matrix_host = os.getenv('MATRIX_HOST')
     matrix_user_id = os.getenv('MATRIX_USER_ID')
+    matrix_password = os.getenv('MATRIX_PASSWORD')
     matrix_room_id = os.getenv('MATRIX_ROOM_ID')
     sleep_time_seconds = os.getenv('SLEEP_TIME_SECONDS')
 
     content = scrape_instagram_content(instagram_username, sleep_time_seconds)
-    await send_matrix_messages(matrix_access_token, matrix_user_id, matrix_room_id, content)
+    await send_matrix_messages(matrix_host, matrix_user_id, matrix_password, matrix_room_id, content)
 
 # Run the main function
 if __name__ == "__main__":

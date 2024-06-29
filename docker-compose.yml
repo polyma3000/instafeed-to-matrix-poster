@@ -8,7 +8,8 @@ services:
       - .:/app
     environment:
       - INSTAGRAM_USERNAME=your_instagram_username
-      - MATRIX_ACCESS_TOKEN=your_matrix_access_token
+      - MATRIX_HOST=https://your.matrix.server
       - MATRIX_USER_ID=@your_matrix_username:matrix.org
+      - MATRIX_PASSWORD=your_password
       - MATRIX_ROOM_ID=!your_room_id:matrix.org
       - SLEEP_TIME_SECONDS=21600 # 6 hours in seconds
