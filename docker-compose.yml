@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  instafeed-to-matrix-poster:
+    build: .
+    container_name: instafeed-to-matrix-poster
+    volumes:
+      - .:/app
+    environment:
+      - INSTAGRAM_USERNAME=your_instagram_username
+      - MATRIX_ACCESS_TOKEN=your_matrix_access_token
+      - MATRIX_USER_ID=@your_matrix_username:matrix.org
+      - MATRIX_ROOM_ID=!your_room_id:matrix.org
+      - SLEEP_TIME_SECONDS=21600 # 6 hours in seconds
